@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration>
+	<Appenders>
+		<Console name="Console" target="SYSTEM_OUT">
+			<PatternLayout pattern="%p [%t] %c{1}.%M(%L) | %m%n" />
+		</Console>
+	</Appenders>
+
+	<Loggers>
+		<Logger name="net.sf.ehcache" level="info" />
+		<!-- Suppress success logging from InteractiveAuthenticationSuccessEvent -->
+		<Logger name="org.springframework.security" level="error" />
+		<Logger name="org.apache" level="error" />
+		<Logger name="org.dbunit" level="error" />
+		<Logger name="org.hibernate" level="error" />
+		<!-- Uncomment if you want to see Hibernate's SQL -->
+		<Logger name="org.hibernate.SQL" level="error" />
+		<Logger name="org.springframework" level="error" />
+		<Logger name="cn.mezeron" level="debug" />
+		<Logger name="org.quartz" level="error" />
+		<Root level="info">
+			<AppenderRef ref="Console" />
+		</Root>
+	</Loggers>
+</Configuration>

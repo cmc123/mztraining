@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="
+http://www.springframework.org/schema/beans 
+http://www.springframework.org/schema/beans/spring-beans-3.0.xsd 
+http://www.springframework.org/schema/context 
+http://www.springframework.org/schema/context/spring-context-3.0.xsd
+http://www.springframework.org/schema/aop   
+http://www.springframework.org/schema/aop/spring-aop-2.5.xsd">
+
+	<!-- 引入属性文件 -->
+	<context:property-placeholder location="classpath:config.properties" />
+	
+	<!-- 自动扫描dao和service包(自动注入) -->
+	<context:component-scan base-package="cn.mezeron" />
+	<!-- 织入切面 -->
+	<aop:aspectj-autoproxy />
+	
+	<!-- Password Encoder Bean -->
+	<bean id="passwordEncoder"
+		class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
+		
+		<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="maxUploadSize" value="20971520" />
+		<property name="defaultEncoding" value="UTF-8" />
+		<property name="resolveLazily" value="true" />
+		<property name="maxInMemorySize" value="20971520"/>
+	</bean>
+	
+</beans>

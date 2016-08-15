@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:context="http://www.springframework.org/schema/context" 
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:tool="http://www.springframework.org/schema/tool"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" 
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	                    http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+	                    http://www.springframework.org/schema/context
+	                    http://www.springframework.org/schema/context/spring-context-4.0.xsd
+	                    http://www.springframework.org/schema/tx
+	                    http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+	                    http://www.springframework.org/schema/tool	                    
+	                    http://www.springframework.org/schema/tool/spring-tool-4.0.xsd
+	                 	http://www.springframework.org/schema/mvc
+	                    http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd">               
+	
+    <mvc:resources mapping="/resources/**" location="/static/" />
+    <!-- 配置页面成为静态资源，这个项目中所有页面都当成是一个静态资源，里面的动态数据都是在页面加载过程中通过js来从后台获取的 -->
+    <mvc:resources mapping="/views/**" location="/static/views/" />
+    <mvc:resources mapping="/js/**" location="/static/js/" />
+    <mvc:annotation-driven>  
+        <mvc:message-converters>  
+            <ref bean="stringHttpMessageConverter" />  
+            <ref bean="JsonHttpMessageConverter" />  
+        </mvc:message-converters>  
+    </mvc:annotation-driven>  
+  
+    <bean id="stringHttpMessageConverter"  
+        class="org.springframework.http.converter.StringHttpMessageConverter">  
+        <constructor-arg value="UTF-8" index="0"></constructor-arg><!--  
+            避免出现乱码 -->  
+        <property name="supportedMediaTypes">  
+            <list>  
+                <value>text/plain;charset=UTF-8</value>  
+            </list>  
+        </property>  
+    </bean>  
+    <!-- 输出对象转JSON支持 -->
+    <bean id="JsonHttpMessageConverter"  
+        class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter">
+        <property name="supportedMediaTypes">
+			<list>
+				<value>application/json;charset=UTF-8</value>
+				<value>text/html;charset=UTF-8</value>
+			</list>
+		</property>
+    </bean>  
+    <context:component-scan base-package="cn.mezeron.controller" >
+		    <context:include-filter type="annotation"
+		expression="org.springframework.stereotype.Controller" />
+		<context:exclude-filter type="annotation"
+		expression="org.springframework.stereotype.Service" />
+	</context:component-scan>
+	
+</beans>
